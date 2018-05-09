@@ -17,7 +17,12 @@ check() {
 
 # called by dracut
 depends() {
-    echo network rootfs-block
+    if dracut_module_included nm; then
+        echo nm
+    else
+        echo network
+    fi
+    echo rootfs-block
     return 0
 }
 

@@ -17,8 +17,11 @@ check() {
 
 # called by dracut
 depends() {
-    # We depend on network modules being loaded
-    echo network
+    if dracut_module_included nm; then
+        echo nm
+    else
+        echo network
+    fi
 }
 
 # called by dracut

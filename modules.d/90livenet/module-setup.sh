@@ -8,7 +8,12 @@ check() {
 
 # called by dracut
 depends() {
-    echo network url-lib dmsquash-live img-lib
+    if dracut_module_included nm; then
+        echo nm
+    else
+        echo network
+    fi
+    echo url-lib dmsquash-live img-lib
     return 0
 }
 

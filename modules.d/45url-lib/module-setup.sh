@@ -9,7 +9,11 @@ check() {
 
 # called by dracut
 depends() {
-    echo network
+    if dracut_module_included nm; then
+        echo nm
+    else
+        echo network
+    fi
     return 0
 }
 
