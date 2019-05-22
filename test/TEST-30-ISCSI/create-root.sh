@@ -5,7 +5,7 @@ for x in 64-lvm.rules 70-mdadm.rules 99-mount-rules; do
 done
 rm -f -- /etc/lvm/lvm.conf
 udevadm control --reload
-mkfs.ext3 -j -L singleroot -F /dev/sda && \
+mkfs.ext3 -j -L singleroot -FF /dev/sda && \
 mkdir -p /sysroot && \
 mount /dev/sda /sysroot && \
 cp -a -t /sysroot /source/* && \
@@ -14,9 +14,9 @@ mdadm --create /dev/md0 --run --auto=yes --level=stripe --raid-devices=2 /dev/sd
 mdadm -W /dev/md0 || : && \
 lvm pvcreate -ff  -y /dev/md0 && \
 lvm vgcreate dracut /dev/md0 && \
-lvm lvcreate -l 100%FREE -n root dracut && \
+lvm lvcreate -y -l 100%FREE -n root dracut && \
 lvm vgchange -ay && \
-mkfs.ext3 -j -L sysroot /dev/dracut/root && \
+mkfs.ext3 -j -L sysroot -FF /dev/dracut/root && \
 mount /dev/dracut/root /sysroot && \
 cp -a -t /sysroot /source/* && \
 umount /sysroot && \
