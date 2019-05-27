@@ -243,7 +243,7 @@ test_setup() {
             done
         )
         inst_multiple sh shutdown poweroff stty cat ps ln ip \
-                      mount dmesg mkdir cp ping grep ls
+                      mount dmesg mkdir cp ping grep ls basename
         for _terminfodir in /lib/terminfo /etc/terminfo /usr/share/terminfo; do
             [[ -f ${_terminfodir}/l/linux ]] && break
         done
