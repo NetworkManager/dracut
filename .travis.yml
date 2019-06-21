@@ -34,6 +34,9 @@ before_script:
     git describe --abbrev=0 --tags || :
     git describe --tags || :
 
+after_script:
+  - find . /var/tmp/dracut-test* -name '*.log' |xargs tail -n666
+
 script:
 - docker run --privileged -it -v $(pwd)/:/dracut fedora:$IMAGE /dracut/fedora-test.sh $IMAGE-$$ "$TESTS"
 
