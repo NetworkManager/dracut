@@ -7,9 +7,11 @@ set -ex
 RUN_ID="$1"
 TESTS=$2
 
-dnf -y update --best --allowerasing &>/dev/null
+cat /etc/os-release
 
-dnf -y install --best --allowerasing \
+dnf -v -y update --best --allowerasing &>/dev/null
+
+dnf -v -y install --best --allowerasing \
     dash \
     asciidoc \
     mdadm \
