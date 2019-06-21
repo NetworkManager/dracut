@@ -32,6 +32,10 @@ run_server() {
 
     echo Sleeping 10 seconds to give the server a head start
     sleep 10
+    if ! [ -f "$TESTDIR"/server.pid ]; then
+        echo "Server is no longer running" 1>&2
+        return 1
+    fi
 }
 
 client_test() {
