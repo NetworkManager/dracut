@@ -8,9 +8,6 @@ udevadm control --reload
 mkfs.ext3 -j -L singleroot -F /dev/sda && \
 mkdir -p /sysroot && \
 mount /dev/sda /sysroot && \
-find /source -type f |xargs du -sh
-du -sh /source /source/*
-df -h /source /sysroot
 cp -a -t /sysroot /source/* && \
 umount /sysroot && \
 mdadm --create /dev/md0 --run --auto=yes --level=stripe --raid-devices=2 /dev/sdc /dev/sdd && \

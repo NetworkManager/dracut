@@ -32,9 +32,6 @@ lvm vgchange -ay && \
 mke2fs /dev/dracut/root && \
 mkdir -p /sysroot && \
 mount /dev/dracut/root /sysroot && \
-find /source -type f |xargs du -sh
-du -sh /source /source/*
-df -h /source /sysroot
 cp -a -t /sysroot /source/* && \
 umount /sysroot && \
 sleep 2 && \
