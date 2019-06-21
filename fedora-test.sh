@@ -9,7 +9,7 @@ TESTS=$2
 
 cat /etc/os-release
 
-dnf -v -y update --best --allowerasing &>/dev/null
+dnf -v -y update --best --allowerasing
 
 dnf -v -y install --best --allowerasing \
     dash \
@@ -42,7 +42,7 @@ dnf -v -y install --best --allowerasing \
     /usr/bin/qemu-system-$(uname -i) \
     e2fsprogs \
     tcpdump \
-    $NULL &>/dev/null
+    $NULL
 
 ./configure
 
