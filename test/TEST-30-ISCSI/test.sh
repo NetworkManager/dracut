@@ -109,9 +109,9 @@ test_setup() {
     fi
 
     # Create the blank file to use as a root filesystem
-    dd if=/dev/null of=$TESTDIR/root.ext3 bs=1M seek=43
-    dd if=/dev/null of=$TESTDIR/iscsidisk2.img bs=1M seek=43
-    dd if=/dev/null of=$TESTDIR/iscsidisk3.img bs=1M seek=43
+    dd if=/dev/null of=$TESTDIR/root.ext3 bs=1M seek=44
+    dd if=/dev/null of=$TESTDIR/iscsidisk2.img bs=1M seek=44
+    dd if=/dev/null of=$TESTDIR/iscsidisk3.img bs=1M seek=44
 
     kernel=$KVERSION
     # Create what will eventually be our root filesystem onto an overlay
