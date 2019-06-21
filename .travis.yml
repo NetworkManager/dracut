@@ -4,11 +4,11 @@ services:
 - docker
 env:
   matrix:
-  - IMAGE=latest TESTS=20
-  - IMAGE=latest TESTS=70
-  - IMAGE=latest TESTS=13
-  - IMAGE=latest TESTS=14
-  - IMAGE=latest TESTS=17
+  - IMAGE=29 TESTS=20
+  - IMAGE=29 TESTS=70
+  - IMAGE=29 TESTS=13
+  - IMAGE=29 TESTS=14
+  - IMAGE=29 TESTS=17
 
 before_script:
   - docker pull fedora:$IMAGE
