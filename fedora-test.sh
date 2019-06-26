@@ -7,9 +7,10 @@ set -ex
 RUN_ID="$1"
 TESTS=$2
 
-dnf -y update --best --allowerasing &>/dev/null
-
-dnf -y install --best --allowerasing \
+upd ()
+{
+dnf -vvv -y update --best --allowerasing &&
+dnf -vvv -y install --best --allowerasing \
     dash \
     asciidoc \
     mdadm \
@@ -40,7 +41,10 @@ dnf -y install --best --allowerasing \
     /usr/bin/qemu-system-$(uname -i) \
     e2fsprogs \
     tcpdump \
-    $NULL &>/dev/null
+    $NULL
+}
+
+upd || upd || upd
 
 # https://koji.fedoraproject.org/koji/taskinfo?taskID=35815954
 xargs rpm -Fvh <<PKGS
