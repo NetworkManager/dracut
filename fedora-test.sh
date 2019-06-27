@@ -42,6 +42,27 @@ dnf -y install --best --allowerasing \
     tcpdump \
     $NULL &>/dev/null
 
+# https://koji.fedoraproject.org/koji/taskinfo?taskID=35860820
+xargs rpm -Fvh <<PKGS
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-container-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-container-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-debugsource-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-devel-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-journal-remote-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-journal-remote-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-libs-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-libs-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-pam-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-pam-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-rpm-macros-241-9.git9ef65cb.fc30.lr2.noarch.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-tests-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-tests-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-udev-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+https://kojipkgs.fedoraproject.org//work/tasks/820/35860820/systemd-udev-debuginfo-241-9.git9ef65cb.fc30.lr2.x86_64.rpm
+PKGS
+
 ./configure
 
 NCPU=$(getconf _NPROCESSORS_ONLN)
