@@ -84,6 +84,9 @@ find / -xdev -type f -not -path '/var/*' \
   -not -path "/boot/loader/entries/\$(cat /etc/machine-id)-*" \
   -not -path "/boot/\$(cat /etc/machine-id)/*" \
   -not -path '/etc/openldap/certs/*' \
+  -not -path '/usr/share/glib-2.0/schemas/gschemas.compiled' \
+  -not -path '/etc/dconf/db/*' \
+  -not -path '/usr/lib/fontconfig/*' \
   -print0 | xargs -0 rpm -qf | \
   grep -F 'not owned' &>> /test.output || :
 exit 0
