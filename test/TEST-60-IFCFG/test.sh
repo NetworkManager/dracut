@@ -5,7 +5,6 @@ TEST_DESCRIPTION="root filesystem on NFS with bridging/bonding/vlan"
 KVERSION=${KVERSION-$(uname -r)}
 
 # Uncomment this to debug failures
-DEBUGFAIL="rd.shell"
 #DEBUGFAIL="rd.shell rd.break"
 #DEBUGFAIL="rd.shell rd.break rd.debug"
 #SERIAL="tcp:127.0.0.1:9999"
