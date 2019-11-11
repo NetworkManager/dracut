@@ -43,7 +43,7 @@ dnf -y install --best --allowerasing \
     NetworkManager \
     $NULL &>/dev/null
 
-rpm -Uvh https://kojipkgs.fedoraproject.org//work/tasks/3247/38913247/NetworkManager-{libnm-,}1.20.7-23874.3d44f7e8a0.fc31.x86_64.rpm
+rpm -Uvh https://kojipkgs.fedoraproject.org//work/tasks/7925/38917925/NetworkManager-{libnm-,}1.20.7-23875.80ed48050e.fc31.x86_64.rpm
 
 ./configure
 
