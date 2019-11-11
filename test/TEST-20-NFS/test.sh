@@ -4,7 +4,7 @@ TEST_DESCRIPTION="root filesystem on NFS"
 KVERSION=${KVERSION-$(uname -r)}
 
 # Uncomment this to debug failures
-#DEBUGFAIL="rd.shell"
+DEBUGFAIL="rd.shell rd.retry=3 rd.timeout=6"
 #SERIAL="tcp:127.0.0.1:9999"
 
 run_server() {
@@ -338,7 +338,7 @@ test_setup() {
         export initdir=$TESTDIR/overlay
         . $basedir/dracut-init.sh
         mkdir $TESTDIR/overlay
-        inst_multiple poweroff shutdown
+        inst_multiple poweroff shutdown ip
         inst_hook shutdown-emergency 000 ./hard-off.sh
         inst_hook emergency 000 ./hard-off.sh
         inst_simple ./99-idesymlinks.rules /etc/udev/rules.d/99-idesymlinks.rules
