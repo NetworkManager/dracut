@@ -66,6 +66,9 @@ install() {
         /^\[Socket\]/aRemoveOnStop=yes' \
         "$initdir$systemdsystemunitdir/dbus.socket"
 
+    # Create the Alias for dbus.service pointing to dbus-broker
+    ln -s $systemdsystemunitdir/dbus-broker.service $initdir/$systemdsystemconfdir/dbus.service
+
     # Install the hosts local user configurations if enabled.
     if [[ $hostonly ]]; then
         inst_multiple -H -o \
