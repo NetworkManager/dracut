@@ -10,6 +10,7 @@ check() {
 
 # called by dracut
 depends() {
+    echo dbus
     return 0
 }
 
@@ -33,8 +34,54 @@ install() {
     inst_multiple -o teamd dhclient
     inst_hook cmdline 99 "$moddir/nm-config.sh"
     if dracut_module_included "systemd"; then
-        inst_simple "${moddir}/nm-run.service" "${systemdsystemunitdir}/nm-run.service"
-        $SYSTEMCTL -q --root "$initdir" enable nm-run.service
+
+        inst_multiple \
+            /usr/lib/systemd/system/NetworkManager.service \
+            /usr/lib/systemd/system/NetworkManager-wait-online.service \
+            "$dbussystem/org.freedesktop.NetworkManager.conf"
+
+        inst_multiple nmcli nm-online
+
+        inst_simple "$moddir/initrd-no-auto-default.conf" "/usr/lib/NetworkManager/conf.d/"
+
+        mkdir -p "${initdir}/$systemdsystemunitdir/NetworkManager.service.d"
+        (
+            echo "[Unit]"
+            echo "DefaultDependencies=no"
+            echo "Before=shutdown.target"
+            echo "After=systemd-udev-trigger.service systemd-udev-settle.service"
+            echo "ConditionPathExistsGlob=|/usr/lib/NetworkManager/system-connections/*"
+            echo "ConditionPathExistsGlob=|/run/NetworkManager/system-connections/*"
+            echo "ConditionPathExistsGlob=|/etc/NetworkManager/system-connections/*"
+            echo "ConditionPathExistsGlob=|/etc/sysconfig/network-scripts/ifcfg-*"
+
+            echo "[Service]"
+            echo "ExecStart="
+            echo "ExecStart=/usr/sbin/NetworkManager --debug"
+            echo "StandardOutput=journal+console"
+            echo "Environment=NM_CONFIG_ENABLE_TAG=initrd"
+
+            echo "[Install]"
+            echo "WantedBy=sysinit.target"
+        ) > "${initdir}/$systemdsystemunitdir/NetworkManager.service.d/dracut.conf"
+
+        mkdir -p "${initdir}/$systemdsystemunitdir/NetworkManager-wait-online.service.d"
+        (
+            echo "[Unit]"
+            echo "DefaultDependencies=no"
+            echo "Before=shutdown.target"
+            echo "Before=dracut-initqueue.service"
+            echo "ConditionPathExists=/tmp/nm-wait-online"
+            echo
+            echo "[Service]"
+            echo "Environment=NM_ONLINE_TIMEOUT=3600"
+            echo
+            echo "[Install]"
+            echo "WantedBy=sysinit.target"
+        ) > "${initdir}/$systemdsystemunitdir/NetworkManager-wait-online.service.d/dracut.conf"
+
+        $SYSTEMCTL -q --root "$initdir" enable NetworkManager.service
+        $SYSTEMCTL -q --root "$initdir" enable NetworkManager-wait-online.service
     fi
 
     inst_hook initqueue/settled 99 "$moddir/nm-run.sh"
